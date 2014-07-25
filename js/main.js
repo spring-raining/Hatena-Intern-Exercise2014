@@ -1,17 +1,22 @@
 // 課題 JS-1: 関数 `parseLTSVLog` を記述してください
 function parseLTSVLog(logStr) {
-    var re = /^path:(.+)\treqtime_microsec:(\d+)$/;
+    var re = /^(\w+):(.+)$/;
     var logArray = logStr.split("\n");
     var rtn = []
 
     for (var i=0; i < logArray.length; i++) {
-        var match = logArray[i].match(re);
-        if (!match)
-            continue;
-        rtn.push({
-            path: match[1],
-            reqtime_microsec: Number(match[2], 10),
-        });
+        var lineArray = logArray[i].split("\t");
+        var obj = {};
+        var hasObj = false;
+        for (var j=0; j < lineArray.length; j++) {
+            var match = lineArray[j].match(re);
+            if (!match)
+                continue;
+            obj[match[1]] = (match[1] === "reqtime_microsec")? Number(match[2], 10) : match[2];
+            hasObj = true;
+        }
+        if (hasObj)
+            rtn.push(obj);
     }
 
     return rtn;
