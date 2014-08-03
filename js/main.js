@@ -1,6 +1,6 @@
 // 課題 JS-1: 関数 `parseLTSVLog` を記述してください
 function parseLTSVLog(logStr) {
-    var re = /^(\w+):(.+)$/;
+    var re = /^([0-9A-Za-z_.-]+):(.+)$/;
     var logArray = logStr.split("\n");
     var rtn = []
 
